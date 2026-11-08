@@ -6,10 +6,10 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
 time_for_rotation = 2 #adjust time, in seconds
-A1in = 1 #placeholder GPIO pins
-A2in = 2 #placeholder GPIO pins
-B1in = 3 #placeholder GPIO pins
-B2in = 4 #placeholder GPIO pins
+A1in = 12 #placeholder GPIO pins
+A2in = 17 #placeholder GPIO pins
+B1in = 22 #placeholder GPIO pins
+B2in = 27 #placeholder GPIO pins
 
 GPIO.setup(A1in, GPIO.OUT)
 GPIO.setup(A2in, GPIO.OUT)
@@ -29,7 +29,7 @@ direction = 1
 
 #calculations
 delay = 60/(steps_per_rev*rpm)
-total_steps = revs*steps_per_rev
+total_steps = int(revs*steps_per_rev)
 
 #rotates 90 degrees clockwise
 def rotate():
