@@ -2,8 +2,8 @@ import time
 import RPi.GPIO as GPIO
 
 
-Trig = 22    #placeholder GPIO pins
-Echo = 17    #placeholder GPIO pins
+Trig = 14    #placeholder GPIO pins
+Echo = 15    #placeholder GPIO pins
 dist_min = 2 #placeholder min distance a cup should be detected at (cm)
 dist_max = 10 #placeholder max distance a cup should be detected at (cm)
 Max_Echo = .025    #max reliable data point
@@ -54,4 +54,4 @@ def echo_time():
         return None #bad data
     return width
 
-detect_range() #current error - range finder is being wacky
+detect_range() 
