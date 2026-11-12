@@ -1,3 +1,8 @@
+#calibrates, then prints the color it senses every second.
+#connect Vin to 3.3v, ground to ground
+#this code uses GPIO 2 for SDA and GPIO 3 for SCL
+
+
 #!/usr/bin/env python3
 """
 Read RGBC color data from an APDS-9960 on a Raspberry Pi (I2C bus 1).
