@@ -2,11 +2,12 @@ import time
 import RPi.GPIO as GPIO
 
 
-Trig = 1    #placeholder GPIO pins
-Echo = 2    #placeholder GPIO pins
-dist_min = 3 #placeholder min distance a cup should be detected at (cm)
-dist_max = 4 #placeholder max distance a cup should be detected at (cm)
+Trig = 22    #placeholder GPIO pins
+Echo = 17    #placeholder GPIO pins
+dist_min = 2 #placeholder min distance a cup should be detected at (cm)
+dist_max = 10 #placeholder max distance a cup should be detected at (cm)
 Max_Echo = .025    #max reliable data point
+
 
 #GPIO setup
 GPIO.setmode(GPIO.BCM)
@@ -14,19 +15,22 @@ GPIO.setup(Trig, GPIO.OUT, initial=GPIO.LOW)
 GPIO.setup(Echo, GPIO.IN)
 
 #only returns when range finder detects something within the specified range
-#must pass three checks to prevent random error from giving a false positive
 #returns error if 10 seconds pass detecting a cup.
 def detect_range():
     count = 0
     start = time.perf_counter()
-    while count<3:
+    while count<1:
         time_dist = echo_time()
         if time_dist is not None:
             dist = time_dist*34300/2
+            print(dist)
             if dist>dist_min and dist<dist_max:
                 count+=1
-        if (time.perf_counter-start)>10:
-            raise Exception("cup not found in 10 seconds") 
+                print("count")
+        if (time.perf_counter()-start)>10:
+            raise Exception("cup not found in 10 seconds")
+        time.sleep(.2)
+    print("detected") 
 
         
 
@@ -37,11 +41,10 @@ def echo_time():
     GPIO.output(Trig, GPIO.HIGH)
     time.sleep(10e-6)
     GPIO.output(Trig, GPIO.LOW)
-    t_trig = time.perf_counter()
-    start = t_trig
-    end = t_trig
+    err = time.perf_counter()
     while GPIO.input(Echo) == 0:
-        pass
+        if time.perf_counter()- err>.04:
+            return None
     start = time.perf_counter()
     while GPIO.input(Echo) == 1: 
         pass
@@ -50,3 +53,5 @@ def echo_time():
     if width <=0 or width>Max_Echo:
         return None #bad data
     return width
+
+detect_range() #current error - range finder is being wacky
