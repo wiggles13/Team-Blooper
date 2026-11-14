@@ -2,8 +2,8 @@ import time
 import RPi.GPIO as GPIO
 
 
-Trig = 14    #placeholder GPIO pins
-Echo = 15    #placeholder GPIO pins
+Trig = 20   
+Echo = 21
 dist_min = 3 #placeholder min distance a cup should be detected at (cm)
 dist_max = 5 #placeholder max distance a cup should be detected at (cm)
 Max_Echo = .025    #max reliable data point

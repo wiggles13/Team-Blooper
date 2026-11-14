@@ -6,10 +6,10 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
 time_for_rotation = 2 #adjust time, in seconds
-A1in = 12 #placeholder GPIO pins
-A2in = 17 #placeholder GPIO pins
-B1in = 22 #placeholder GPIO pins
-B2in = 27 #placeholder GPIO pins
+A1in = 25
+A2in = 8 
+B1in = 7 
+B2in = 1
 
 GPIO.setup(A1in, GPIO.OUT)
 GPIO.setup(A2in, GPIO.OUT)
