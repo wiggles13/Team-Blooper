@@ -4,8 +4,8 @@ import RPi.GPIO as GPIO
 
 Trig = 14    #placeholder GPIO pins
 Echo = 15    #placeholder GPIO pins
-dist_min = 2 #placeholder min distance a cup should be detected at (cm)
-dist_max = 10 #placeholder max distance a cup should be detected at (cm)
+dist_min = 3 #placeholder min distance a cup should be detected at (cm)
+dist_max = 5 #placeholder max distance a cup should be detected at (cm)
 Max_Echo = .025    #max reliable data point
 
 
@@ -23,14 +23,11 @@ def detect_range():
         time_dist = echo_time()
         if time_dist is not None:
             dist = time_dist*34300/2
-            print(dist)
             if dist>dist_min and dist<dist_max:
                 count+=1
-                print("count")
-        if (time.perf_counter()-start)>10:
-            raise Exception("cup not found in 10 seconds")
-        time.sleep(.2)
-    print("detected") 
+        if (time.perf_counter()-start)>20:
+            raise Exception("cup not found in 20 seconds")
+        time.sleep(.5)
 
         
 
@@ -53,5 +50,3 @@ def echo_time():
     if width <=0 or width>Max_Echo:
         return None #bad data
     return width
-
-detect_range() 
