@@ -37,3 +37,11 @@ def change_color(color):
 def clear():
     pixels.fill((0, 0 ,0))
     pixels.show()
+
+change_color("red")
+time.sleep(3)
+change_color("blue")
+time.sleep(3)
+change_color("green")
+time.sleep(3)
+clear()

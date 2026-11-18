@@ -51,3 +51,16 @@ def echo_time():
     if width <=0 or width>Max_Echo:
         return None #bad data
     return width
+
+
+#for the lazy suzan to stop at the right spot. returns true when the cup is back at the right spot
+def stop_rotate():
+    while count<3:
+        time.sleep(.2)
+        time_dist = echo_time()
+        if time_dist is not None:
+            dist = time_dist*34300/2
+            if dist>dist_min and dist<dist_max:
+                count+=1
+    time.sleep(.2)  #delay bewteen detecion and stopping
+    return True

@@ -55,3 +55,15 @@ def rotate():
             set_coil(1, 0, 0, 1)
         time.sleep(delay)
     set_coil(0, 0, 0, 0)
+
+rotate()
+time.sleep(.3)
+
+rotate()
+time.sleep(.3)
+
+rotate()
+time.sleep(.3)
+
+rotate()
+time.sleep(.3)
