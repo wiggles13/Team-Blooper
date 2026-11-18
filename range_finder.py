@@ -4,8 +4,9 @@ import RPi.GPIO as GPIO
 
 Trig = 20   
 Echo = 21
-dist_min = 3 #placeholder min distance a cup should be detected at (cm)
-dist_max = 5 #placeholder max distance a cup should be detected at (cm)
+#ranges at which the circle(cardboard) is detected 4.07-4.8 cm. in 1000 tests rangfinder only measured less than 4cm in one
+dist_min = 1 #placeholder min distance a cup should be detected at (cm)
+dist_max = 4 #placeholder max distance a cup should be detected at (cm)
 Max_Echo = .025    #max reliable data point
 
 
@@ -19,15 +20,15 @@ GPIO.setup(Echo, GPIO.IN)
 def detect_range():
     count = 0
     start = time.perf_counter()
-    while count<1:
+    while count<3:
         time_dist = echo_time()
         if time_dist is not None:
             dist = time_dist*34300/2
             if dist>dist_min and dist<dist_max:
                 count+=1
-        if (time.perf_counter()-start)>20:
-            raise Exception("cup not found in 20 seconds")
-        time.sleep(.5)
+        if (time.perf_counter()-start)>15:
+            raise Exception("cup not found in 15 seconds")
+        time.sleep(.2)
 
         
 
