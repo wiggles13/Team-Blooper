@@ -1,5 +1,6 @@
 import time
 import RPi.GPIO as GPIO
+from lazy_susan import stop_event
 
 
 Trig = 20   
@@ -55,6 +56,7 @@ def echo_time():
 
 #for the lazy suzan to stop at the right spot. returns true when the cup is back at the right spot
 def stop_rotate():
+    count = 0
     while count<3:
         time.sleep(.2)
         time_dist = echo_time()
@@ -63,4 +65,4 @@ def stop_rotate():
             if dist>dist_min and dist<dist_max:
                 count+=1
     time.sleep(.2)  #delay bewteen detecion and stopping
-    return True
+    stop_event.set()

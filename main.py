@@ -7,6 +7,7 @@ import boba_dispenser
 import tea_dispenser
 import ice_dispenser
 from time import sleep
+import threading
 
 def payment():
     LED_strip.change_color()
@@ -49,7 +50,13 @@ def main(ice, boba, flavor):
     LED_strip.change_color()
 
     #rotates back to start
-    lazy_susan.rotate()
+    motor_thread = threading.Thread(target=lazy_susan.reset_pos)
+    sensor_thread = threading.Thread(target=range_finder.stop_rotate)
+
+    motor_thread.start()
+    sensor_thread.start()
+
+    motor_thread.join()
 
     LED_strip.rainbow()
     LED_strip.clear()

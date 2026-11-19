@@ -1,6 +1,9 @@
 #setup
 import RPi.GPIO as GPIO
 import time
+import threading
+
+stop_event = threading.Event() #tells reset_pos to stop
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -56,14 +59,27 @@ def rotate():
         time.sleep(delay)
     set_coil(0, 0, 0, 0)
 
-rotate()
-time.sleep(.3)
-
-rotate()
-time.sleep(.3)
-
-rotate()
-time.sleep(.3)
-
-rotate()
-time.sleep(.3)
+def reset_pos():
+    stop_event.clear()
+    state = 0
+    set_coil(1, 0, 0, 0)
+    while not stop_event.is_set():
+        state = (state+direction)%8
+        if state == 0:
+            set_coil(1, 0, 0, 0)
+        if state == 1:
+            set_coil(1, 1, 0, 0)
+        if state == 2:
+            set_coil(0, 1, 0, 0)
+        if state == 3:
+            set_coil(0, 1, 1, 0)
+        if state == 4:
+            set_coil(0, 0, 1, 0)
+        if state == 5:
+            set_coil(0, 0, 1, 1)
+        if state == 6:
+            set_coil(0, 0, 0, 1)
+        if state == 7:
+            set_coil(1, 0, 0, 1)
+        time.sleep(delay)
+    set_coil(0, 0, 0, 0)
