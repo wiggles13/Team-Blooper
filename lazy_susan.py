@@ -35,10 +35,10 @@ delay = 60/(steps_per_rev*rpm)
 total_steps = int(revs*steps_per_rev)
 
 #rotates 90 degrees clockwise
-def rotate():
+def rotate(adjust=1):
     state = 0
     set_coil(1, 0, 0, 0)
-    for i in range(total_steps):
+    for i in range(int(total_steps*adjust)):
         state = (state+direction)%8
         if state == 0:
             set_coil(1, 0, 0, 0)
@@ -61,25 +61,26 @@ def rotate():
 
 def reset_pos():
     stop_event.clear()
+    rotate(adjust=.7)
     state = 0
     set_coil(1, 0, 0, 0)
     while not stop_event.is_set():
         state = (state+direction)%8
-        if state == 0:
+        if state == 0 and not stop_event.is_set():
             set_coil(1, 0, 0, 0)
-        if state == 1:
+        if state == 1 and not stop_event.is_set():
             set_coil(1, 1, 0, 0)
-        if state == 2:
+        if state == 2 and not stop_event.is_set():
             set_coil(0, 1, 0, 0)
-        if state == 3:
+        if state == 3 and not stop_event.is_set():
             set_coil(0, 1, 1, 0)
-        if state == 4:
+        if state == 4 and not stop_event.is_set():
             set_coil(0, 0, 1, 0)
-        if state == 5:
+        if state == 5 and not stop_event.is_set():
             set_coil(0, 0, 1, 1)
-        if state == 6:
+        if state == 6 and not stop_event.is_set():
             set_coil(0, 0, 0, 1)
-        if state == 7:
+        if state == 7 and not stop_event.is_set():
             set_coil(1, 0, 0, 1)
-        time.sleep(delay)
+        time.sleep(delay*2.5)
     set_coil(0, 0, 0, 0)
